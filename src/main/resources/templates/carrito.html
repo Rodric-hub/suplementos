@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🛒 Mi Carrito | MarketFit</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body class="bg-light">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top shadow">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">MarketFit</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" th:href="@{/}">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/#productos}">Productos</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Categorías</a>
+          <ul class="dropdown-menu">
+            <li th:each="cat : ${categorias}">
+              <a class="dropdown-item" th:href="@{/productos/categoria/{id}(id=${cat.id})}" th:text="${cat.nombre}"></a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+      </ul>
+
+      <div class="d-flex align-items-center ms-3">
+        <div th:if="${session.usuarioLogueado != null}">
+          <a th:href="@{/logout}" class="btn btn-danger me-2">Cerrar sesión</a>
+        </div>
+        <div th:if="${session.usuarioLogueado == null}">
+          <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+            Login
+          </button>
+        </div>
+        <div th:if="${usuario != null}">
+          <a th:href="@{/carrito}" class="btn btn-warning">🛒</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- CONTENIDO -->
+<main class="container py-5" style="padding-top: 100px;">
+  <h2 class="mb-4 text-center text-success fw-bold">🛒 Mi Carrito</h2>
+
+  <div th:if="${#lists.isEmpty(carrito)}" class="text-center bg-white p-4 rounded shadow-sm">
+    <p class="mb-3">No tienes productos en tu carrito.</p>
+    <a href="/" class="btn btn-success">Volver a la tienda</a>
+  </div>
+
+  <div th:if="${!#lists.isEmpty(carrito)}" class="bg-white p-4 rounded shadow-sm">
+    <table class="table align-middle">
+      <thead class="table-success">
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="item : ${carrito}">
+          <td th:text="${item.producto.nombre}"></td>
+          <td>S/ <span th:text="${item.producto.precio}"></span></td>
+          <td th:text="${item.cantidad}"></td>
+          <td>S/ <span th:text="${item.producto.precio * item.cantidad}"></span></td>
+          <td>
+            <form th:action="@{/carrito/eliminar/{id}(id=${item.id})}" method="post">
+              <button class="btn btn-danger btn-sm">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="text-center mt-4">
+     <a th:href="@{/productos/categoria/1}" class="btn btn-secondary me-2">Seguir comprando</a>
+      <a href="#" class="btn btn-success">Finalizar compra</a>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-white text-center py-4 mt-5">
+  <div class="container">
+    <p class="mb-0">© 2025 - MarketFit | Proyecto Universitario UTP</p>
+    <p class="small">Villa el Salvador - Lima, Perú</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,28 +1,36 @@
-/* Ajuste de navbar fijo */
+
 body {
   padding-top: 56px;
   margin: 0;
   background: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* Carousel caption */
 .carousel-caption {
   background: rgba(0, 0, 0, 0.55);
   padding: 1rem;
   border-radius: 10px;
 }
 
-/* Cards hover */
 .card:hover {
   transform: translateY(-5px);
   transition: transform 0.3s ease;
 }
 
+/* asegura que todas las imagenes sean del mismo tamaño*/
+.card-img-top {
+  width: 100%;
+  height: 250px; /* más alta o baja */
+  object-fit: cover; 
+  object-position: center;
+}
 /* --- CARRUSEL A PANTALLA COMPLETA --- */
 #heroCarousel,
 #heroCarousel .carousel-inner,
 #heroCarousel .carousel-item {
-  height: calc(90vh - 56px); /* Toda la pantalla menos la navbar */
+  height: calc(90vh - 56px); 
 }
 
 #heroCarousel .carousel-item img {
@@ -33,7 +41,7 @@ body {
   background: #222;
 }
 
-/* Ajusta el caption para que no tape mucho */
+
 #heroCarousel .carousel-caption {
   bottom: 2rem;
   top: unset;
