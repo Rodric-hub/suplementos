@@ -13,12 +13,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Desactivar CSRF para evitar 403
+            .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/registro", "/login-manual", "/css/**", "/js/**", "/productos/**").permitAll()
-                .anyRequest().permitAll() // 🔹 nada requiere autenticación
+                .anyRequest().permitAll() 
             )
-            .formLogin(form -> form.disable()) // 🔹 desactivar login de Spring
+            .formLogin(form -> form.disable()) 
             .logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")

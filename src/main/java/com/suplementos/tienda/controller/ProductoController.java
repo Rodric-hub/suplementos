@@ -26,12 +26,11 @@ public class ProductoController {
         return "productos";
     }
 
-    // --- Productos por categoría ---
     @GetMapping("/productos/categoria/{id}")
     public String productosPorCategoria(@PathVariable Long id, Model model, HttpSession session) {
         model.addAttribute("productos", productoRepo.findByCategoriaId(id));
         model.addAttribute("categorias", categoriaRepo.findAll());
         model.addAttribute("usuario", session.getAttribute("usuarioLogueado"));
-        return "productos"; // misma vista, solo filtrada
+        return "productos"; 
     }
 }

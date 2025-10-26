@@ -22,10 +22,10 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model, HttpSession session) {
-        var productos = productoRepo.findTop8ByOrderByIdAsc(); // primeros 8 productos
+        var productos = productoRepo.findTop8ByOrderByIdAsc(); 
         model.addAttribute("productos", productos);
         model.addAttribute("usuario", session.getAttribute("usuarioLogueado"));
-        model.addAttribute("categorias", categoriaRepo.findAll()); // para el navbar
+        model.addAttribute("categorias", categoriaRepo.findAll()); 
         return "index";
     }
 }

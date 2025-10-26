@@ -30,7 +30,7 @@ public class CarritoController {
     public String agregar(@PathVariable Long id, HttpSession session, RedirectAttributes ra) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         if (usuario == null) {
-            return "redirect:/?login=true"; // Usuario no logueado
+            return "redirect:/?login=true"; 
         }
 
         Producto p = productoRepo.findById(id).orElse(null);
@@ -39,11 +39,10 @@ public class CarritoController {
             return "redirect:/";
         }
 
-        // Verificar si ya existe el producto en el carrito del usuario
         Carrito existente = carritoRepo.findByUsuarioAndProducto(usuario, p);
 
         if (existente != null) {
-            existente.setCantidad(existente.getCantidad() + 1); // Aumenta cantidad
+            existente.setCantidad(existente.getCantidad() + 1); 
             carritoRepo.save(existente);
         } else {
             Carrito c = new Carrito();
@@ -57,13 +56,11 @@ public class CarritoController {
         return "redirect:/";
     }
 
-    // Evita error con GET
     @GetMapping("/agregar/{id}")
     public String agregarGet() {
         return "redirect:/";
     }
 
-    // Ver carrito
     @GetMapping
     public String verCarrito(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
@@ -75,7 +72,6 @@ public class CarritoController {
         return "carrito";
     }
 
-    // Eliminar del carrito
     @PostMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id) {
         carritoRepo.deleteById(id);
